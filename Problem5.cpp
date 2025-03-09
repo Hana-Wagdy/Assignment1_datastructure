@@ -125,5 +125,5 @@ void Stat<T>::inputData(){
 //MENU
 template<typename T>
 void Stat<T>::satisicsMenu(){
-
+//lesa ma 5lastesh
 }
