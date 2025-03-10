@@ -2,10 +2,6 @@
 using namespace std;
 
 
-int main() {
-    cout << "Hello, World!" << endl;
-    return 0;
-}
 template<typename T>
 class Stat{
 
@@ -43,15 +39,15 @@ Stat<T>::~Stat() {
     delete[] data;
 }
 
-//Sort
+//Sort "BUBBLE"
 template<typename T>
 void Stat<T>::sort(){
     for (T i = 0; i < size-1; ++i) {
-        for (T j = 0; j < i+1; ++j) {
-            if(j<i){
-             T tmp=i;
-             i=j;
-             j=tmp;
+        for (int j = 0; j < size - i - 1; ++j) {
+            if (data[j] > data[j + 1]) {
+                T tmp = data[j];
+                data[j] = data[j + 1];
+                data[j + 1] = tmp;
             }
         }
     }
@@ -73,7 +69,7 @@ T Stat<T>::findMax(){
 template <typename T>
 T Stat<T>::findSummation() {
     T Sum=0;
-    for (T i = 0; i <size-1 ; ++i) {
+    for (T i = 0; i <size ; ++i) {
         Sum=Sum+data[i];
     }
     return Sum;
@@ -83,8 +79,7 @@ T Stat<T>::findSummation() {
 template <typename T>
 double Stat<T>::findMean() {
     T total=findSummation();
-    double mean = total/size;
-    return mean;
+    return static_cast<double>(total) / size;
 }
 
 //Median
@@ -108,8 +103,8 @@ T Stat<T>::findMedian() {
 template<typename T>
 void Stat<T>::displayArray() {
     cout<<"Sorted Array: ";
-    for (T element:data) {
-        cout<<element<<" ,";
+    for (int i = 0; i < size; ++i) {
+        cout<<data[i]<<" ,";
     }
     cout<<endl;
 }
@@ -117,7 +112,8 @@ void Stat<T>::displayArray() {
 //Taking input
 template<typename T>
 void Stat<T>::inputData(){
-    for (T i = 0; i <size-1 ; ++i) {
+    for (T i = 0; i <size ; ++i) {
+        cout<<"Enter element "<<i+1<<": ";
         cin>>data[i];
     }
 }
@@ -125,5 +121,62 @@ void Stat<T>::inputData(){
 //MENU
 template<typename T>
 void Stat<T>::satisicsMenu(){
-//lesa ma 5lastesh
+    int choice;
+inputData();
+sort();
+displayArray();
+
+cout <<"Select a statistical calculation:\n ";
+    do {
+        cout << "1. Find Median\n";
+        cout << "2. Find Minimum\n";
+        cout << "3. Find Maximum\n";
+        cout << "4. Find Mean\n";
+        cout << "5. Find Summation\n";
+        cout << "6. Display Sorted Array\n";
+        cout << "7. Exit\n";
+        cout << "Enter your choice: ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1:
+                cout << "Median: " << findMedian() << endl;
+                break;
+            case 2:
+                cout << "Minimum: " << findMin() << endl;
+                break;
+            case 3:
+                cout << "Maximum: " << findMax() << endl;
+                break;
+            case 4:
+                cout << "Mean: " << findMean() << endl;
+                break;
+            case 5:
+                cout << "Summation: " << findSummation() << endl;
+                break;
+            case 6:
+                displayArray();
+                break;
+            case 7:
+                cout << "Exiting...\n";
+                break;
+            default:
+                cout << "Invalid choice! Please try again.\n";
+                break;
+        }
+    } while (choice != 7);
+
+}
+
+
+
+int main() {
+    int s;
+    cout << "Enter the number of elements: ";
+    cin >> s;
+    Stat<int>Array(s);
+
+    Array.satisicsMenu();
+
+    return 0;
 }
